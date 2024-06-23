@@ -1,0 +1,55 @@
+services:
+  spring-app:
+    container_name: spring-app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      SPRING_PROFILES_ACTIVE: integration
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/testdb
+      SPRING_DATASOURCE_USERNAME: testuser
+      SPRING_DATASOURCE_PASSWORD: testpassword
+      MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus,health,info
+      MANAGEMENT_ENDPOINTS_JMX_EXPOSURE_INCLUDE: '*'
+      MANAGEMENT_PROMETHEUS_ENABLED: true
+      MANAGEMENT_ENDPOINT_PROMETHEUS_ENABLED: true
+    depends_on:
+      - postgres
+      - prometheus
+    ports:
+      - "8080:8080"
+    networks:
+      - test-net
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - test-net
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+    networks:
+      - test-net
+
+networks:
+  test-net:
+    driver: bridge
+
+volumes:
+  postgres-data:

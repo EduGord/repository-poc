@@ -1,0 +1,15 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: validate
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/testdb
+    username: testuser
+    password: testpassword
+    hikari:
+      minimum-idle: 10
+      maximum-pool-size: 20
+      driver-class-name: org.postgresql.Driver
