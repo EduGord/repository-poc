@@ -65,16 +65,16 @@ To run performance tests for 100,000 inserts and updates across JDBC, JPA, and D
 
 2. Trigger the performance tests by making a POST request to:
    ```
-   POST http://127.0.0.1:8080/performance/insert-test?numberOfOperations=100000
+   POST http://127.0.0.1:8080/performance/INSERT?numberOfOperations=100000
    ```
       ```
-   POST http://127.0.0.1:8080/performance/select-test?numberOfOperations=100000
+   POST http://127.0.0.1:8080/performance/SELECT?numberOfOperations=100000
    ```
       ```
-   POST http://127.0.0.1:8080/performance/update-test?numberOfOperations=100000
+   POST http://127.0.0.1:8080/performance/UPDATE?numberOfOperations=100000
    ```
       ```
-   POST http://127.0.0.1:8080/performance/delete-test?numberOfOperations=100000
+   POST http://127.0.0.1:8080/performance/DELETE?numberOfOperations=100000
    ```
 
    Replace `8080` with your application's port if different.
