@@ -24,7 +24,7 @@ public class JdbcUserRepository implements IUserRepository<Long> {
     }
 
     public Optional<User> findById(Long id) {
-        return Optional.ofNullable(jdbcTemplate.queryForObject("SELECT * FROM users WHERE id = ?", new UserRowMapper(), id));
+        return jdbcTemplate.query("SELECT * FROM users WHERE id = ?", new UserRowMapper(), id).stream().findFirst();
     }
 
     public Page<User> findAll(Pageable pageable) {

@@ -21,7 +21,7 @@ This project is a sample application demonstrating the usage of different types 
 
 2. Build the project:
    ```bash
-   mvn clean package
+   mvn clean package -Dmaven.test.skip=true
    ```
 
 ## Testing
@@ -65,7 +65,16 @@ To run performance tests for 100,000 inserts and updates across JDBC, JPA, and D
 
 2. Trigger the performance tests by making a POST request to:
    ```
-   POST http://localhost:8080/performance/test?numberOfOperations=100000
+   POST http://127.0.0.1:8080/performance/insert-test?numberOfOperations=100000
+   ```
+      ```
+   POST http://127.0.0.1:8080/performance/select-test?numberOfOperations=100000
+   ```
+      ```
+   POST http://127.0.0.1:8080/performance/update-test?numberOfOperations=100000
+   ```
+      ```
+   POST http://127.0.0.1:8080/performance/delete-test?numberOfOperations=100000
    ```
 
    Replace `8080` with your application's port if different.

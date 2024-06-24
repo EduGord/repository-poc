@@ -52,12 +52,8 @@ public class DaoUserRepository implements IUserRepository<Long> {
     }
 
     public void delete(User user) {
-        boolean exists = !entityManager.createQuery("SELECT 1 FROM User u WHERE u.id = :id", Integer.class)
-                .setParameter("id", user.getId())
-                .setMaxResults(1)
-                .getResultList()
-                .isEmpty();
-        if (exists) {
+        user = entityManager.contains(user) ? user : entityManager.find(User.class, user.getId());
+        if (user != null) {
             entityManager.remove(user);
         }
     }

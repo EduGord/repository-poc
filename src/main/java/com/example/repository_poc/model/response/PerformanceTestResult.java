@@ -1,39 +1,17 @@
 package com.example.repository_poc.model.response;
 
-public class PerformanceTestResult {
-    private long countBefore;
-    private long countAfter;
-    private long timeElapsed;
+import java.io.Serial;
+import java.io.Serializable;
+import java.time.Duration;
 
-    public PerformanceTestResult(long countBefore, long countAfter, long timeElapsed) {
-        this.countBefore = countBefore;
-        this.countAfter = countAfter;
-        this.timeElapsed = timeElapsed;
-    }
-
-    public long getCountBefore() {
-        return countBefore;
-    }
-
-    public void setCountBefore(long countBefore) {
-        this.countBefore = countBefore;
-    }
-
-    public long getCountAfter() {
-        return countAfter;
-    }
-
-    public void setCountAfter(long countAfter) {
-        this.countAfter = countAfter;
-    }
-
-    public long getTimeElapsed() {
-        return timeElapsed;
-    }
-
-    public void setTimeElapsed(long timeElapsed) {
-        this.timeElapsed = timeElapsed;
-    }
+public record PerformanceTestResult(
+        Long numberOfOperations,
+        Long successfulOperations,
+        Long failedOperations,
+        Long countBefore,
+        Long countAfter,
+        Duration timeElapsed
+) implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
 }
-
-
