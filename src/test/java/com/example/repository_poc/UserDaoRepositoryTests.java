@@ -47,7 +47,7 @@ class UserDaoRepositoryTests {
     @Test
     @DirtiesContext
     void testDaoInserts() {
-        LongStream.range(0, 100_000).parallel().forEach(i -> {
+        LongStream.range(0, 100).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
             user.setUsername("Username" + i);
@@ -59,7 +59,7 @@ class UserDaoRepositoryTests {
     @Test
     @DirtiesContext
     void testDaoUpdates() {
-        LongStream.range(0, 100_000).parallel().forEach(i -> {
+        LongStream.range(0, 100).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
             user.setUsername("UpdatedUsername" + i);

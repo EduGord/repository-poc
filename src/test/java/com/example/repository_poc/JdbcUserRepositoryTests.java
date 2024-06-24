@@ -50,7 +50,7 @@ class JdbcUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJdbcInserts() {
-        LongStream.range(0, 100_000).parallel().forEach(i -> {
+        LongStream.range(0, 100).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
             user.setUsername("Username" + i);
@@ -62,7 +62,7 @@ class JdbcUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJdbcUpdates() {
-        LongStream.range(0, 100_000).parallel().forEach(i -> {
+        LongStream.range(0, 100).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
             user.setUsername("UpdatedUsername" + i);

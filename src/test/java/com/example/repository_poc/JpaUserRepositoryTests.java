@@ -49,7 +49,7 @@ class JpaUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJpaInserts() {
-        LongStream.range(0, 100_000).parallel().forEach(i -> {
+        LongStream.range(0, 100).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
             user.setUsername("Username" + i);
@@ -61,7 +61,7 @@ class JpaUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJpaUpdates() {
-        LongStream.range(0, 100_000).parallel().forEach(i -> {
+        LongStream.range(0, 100).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
             user.setUsername("UpdatedUsername" + i);

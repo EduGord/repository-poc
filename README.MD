@@ -26,7 +26,7 @@ This project is a sample application demonstrating the usage of different types 
 
 ## Testing
 
-### Normal Tests with the "test" Profile
+### Container tests with the "test" Profile
 
 This project uses Testcontainers for integration tests. Testcontainers allows us to run tests in a Docker containerized environment, providing a more realistic testing scenario.
 
@@ -35,28 +35,9 @@ To run all tests using Testcontainers, use the following command:
 mvn test
 ```
 
-### Integration Tests with the "integration" Profile
-
-To run integration tests with an external PostgreSQL database and Prometheus monitoring, follow these steps:
-
-1. Generate the JAR file:
-   ```bash
-   mvn clean package -Dmaven.test.skip=true
-   ```
-
-2. Build the Docker images and start the containers using Docker Compose:
-   ```bash
-   docker-compose up --build
-   ```
-
-3. Run the integration tests:
-   ```bash
-   mvn test -Dspring.profiles.active=integration
-   ```
-
 ### Performance Tests
 
-To run performance tests for 100,000 inserts and updates across JDBC, JPA, and DAO implementations, use the following endpoint:
+To run performance tests for inserts, selects, updates and deletes across JDBC, JPA, and DAO implementations, use the following endpoint:
 
 1. Start your application:
    ```bash
