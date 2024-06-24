@@ -5,9 +5,14 @@ global:
 scrape_configs:
   - job_name: 'postgres'
     static_configs:
-      - targets: ['postgres:5432']
+      - targets: ['postgres_exporter:9187']
 
-  - job_name: 'springapp'
+  - job_name: 'spring-app-docker'
     metrics_path: '/actuator/prometheus'
     static_configs:
-      - targets: ['springapp:8080']
+      - targets: ['spring-app:8080']
+
+  - job_name: 'spring-app-local'
+    metrics_path: '/actuator/prometheus'
+    static_configs:
+      - targets: ['127.0.0.1:8080']

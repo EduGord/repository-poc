@@ -16,7 +16,12 @@ This project is a sample application demonstrating the usage of different types 
 
 1. Navigate to the project directory:
    ```bash
-   cd your-repo
+   cd repository-poc
+   ```
+
+2. Build the project:
+   ```bash
+   mvn clean package
    ```
 
 ## Testing
@@ -34,64 +39,45 @@ mvn test
 
 To run integration tests with an external PostgreSQL database and Prometheus monitoring, follow these steps:
 
-1. Build the Docker images and start the containers using Docker Compose:
+1. Generate the JAR file:
    ```bash
-   mvn clean package
+   mvn clean package -Dmaven.test.skip=true
+   ```
+
+2. Build the Docker images and start the containers using Docker Compose:
+   ```bash
    docker-compose up --build
    ```
 
-2. Run the integration tests:
+3. Run the integration tests:
    ```bash
    mvn test -Dspring.profiles.active=integration
    ```
 
-### Tests Overview
+### Performance Tests
 
-We have three main types of repository tests in this project:
+To run performance tests for 100,000 inserts and updates across JDBC, JPA, and DAO implementations, use the following endpoint:
 
-1. **JdbcUserRepositoryTests**:
-   - **Purpose**: To test the `JdbcUserRepository` which uses raw JDBC for data access.
-   - **Description**: These tests ensure that the repository methods work correctly with the database using raw SQL queries.
-   - **Testcontainers**: Uses a PostgreSQL container to run the tests against a real PostgreSQL database.
-   - **Integration Tests**: Runs against an external PostgreSQL database.
-
-2. **JpaUserRepositoryTests**:
-   - **Purpose**: To test the `JpaUserRepository` which uses Spring Data JPA for data access.
-   - **Description**: These tests ensure that the repository methods work correctly using JPA and Hibernate.
-   - **Testcontainers**: Uses a PostgreSQL container to run the tests against a real PostgreSQL database.
-   - **Integration Tests**: Runs against an external PostgreSQL database.
-
-3. **UserDaoRepositoryTests**:
-   - **Purpose**: To test the `UserDaoRepository` which uses a custom DAO (Data Access Object) pattern.
-   - **Description**: These tests ensure that the custom DAO methods work correctly with the database.
-   - **Testcontainers**: Uses a PostgreSQL container to run the tests against a real PostgreSQL database.
-   - **Integration Tests**: Runs against an external PostgreSQL database.
-
-### Running Tests
-
-To run all tests using Testcontainers, use the following command:
-```bash
-mvn test
-```
-
-To run integration tests with Docker Compose, follow these steps:
-
-1. Build and run Docker containers:
+1. Start your application:
    ```bash
-   mvn clean package
-   docker-compose up --build
+   java -jar target/repository-poc.jar
    ```
 
-2. Run the integration tests with the "integration" profile:
-   ```bash
-   mvn test -Dspring.profiles.active=integration
+2. Trigger the performance tests by making a POST request to:
    ```
+   POST http://localhost:8080/performance/test?numberOfOperations=100000
+   ```
+
+   Replace `8080` with your application's port if different.
+
+   This endpoint
+
 
 ## Configuration
 
 ### Database Configuration
 
-The application uses PostgreSQL as the database. You can configure the database settings in the `application.properties` file located in the `src/main/resources` directory.
+The application uses PostgreSQL as the database. You can configure the database settings in the `application-integration.yaml` file located in the `src/main/resources` directory.
 
 ### Testcontainers Configuration
 

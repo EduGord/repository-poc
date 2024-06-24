@@ -1,6 +1,8 @@
 spring:
   application:
-    name: demo
+    name: repository_poc
+  jpa:
+    open-in-view: false
 
 management:
   endpoints:

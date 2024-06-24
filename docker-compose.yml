@@ -9,6 +9,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/testdb
       SPRING_DATASOURCE_USERNAME: testuser
       SPRING_DATASOURCE_PASSWORD: testpassword
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
       MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE: prometheus,health,info
       MANAGEMENT_ENDPOINTS_JMX_EXPOSURE_INCLUDE: '*'
       MANAGEMENT_PROMETHEUS_ENABLED: true
@@ -32,6 +33,18 @@ services:
       - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+    networks:
+      - test-net
+
+  postgres_exporter:
+    image: wrouesnel/postgres_exporter
+    container_name: postgres_exporter
+    environment:
+      DATA_SOURCE_NAME: "postgresql://testuser:testpassword@postgres:5432/testdb?sslmode=disable"
+    ports:
+      - "9187:9187"
+    depends_on:
+      - postgres
     networks:
       - test-net
 

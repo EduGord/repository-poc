@@ -8,10 +8,10 @@
 		<version>3.3.0</version>
 	</parent>
 	<groupId>com.example</groupId>
-	<artifactId>demo</artifactId>
+	<artifactId>repository_poc</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>demo</name>
-	<description>Demo project for Spring Boot</description>
+	<name>repository_poc</name>
+	<description>Repository POC project for Spring Boot</description>
 	<properties>
 		<java.version>21</java.version>
 	</properties>
@@ -56,21 +56,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.testcontainers/postgresql -->
+
+		<!-- Testcontainers dependencies -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>postgresql</artifactId>
 			<version>1.19.8</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.testcontainers/junit-jupiter -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>junit-jupiter</artifactId>
 			<version>1.19.8</version>
 			<scope>test</scope>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.testcontainers/testcontainers -->
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>testcontainers</artifactId>
@@ -98,7 +97,7 @@
 				<artifactId>spring-boot-maven-plugin</artifactId>
 				<version>3.3.0</version>
 				<configuration>
-					<finalName>demo</finalName>
+					<finalName>repository_poc</finalName>
 				</configuration>
 				<executions>
 					<execution>
@@ -110,5 +109,4 @@
 			</plugin>
 		</plugins>
 	</build>
-
 </project>
