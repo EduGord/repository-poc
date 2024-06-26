@@ -7,6 +7,8 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: write
+    concurrency:
+      group: ${{ github.workflow }}-${{ github.ref }}
 
     services:
       postgres:
@@ -47,4 +49,4 @@ jobs:
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./target/allure-report
+          publish_dir: ./target/site/allure-maven-plugin
