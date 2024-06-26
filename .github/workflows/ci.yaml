@@ -18,19 +18,31 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - name: Set up JDK 21
         uses: actions/setup-java@v4
         with:
           distribution: 'corretto'
           java-version: '21'
+
       - name: Build with Maven
         run: mvn clean install -Dmaven.test.skip=true
+
       - name: Run tests
         run: mvn test -Dspring.profiles.active=test
+
       - name: Generate Allure Report
         run: mvn allure:report
+
       - name: Upload Allure Results
         uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: target/allure-results
+
+      - name: Deploy Allure Report to GitHub Pages
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./target/allure-report
