@@ -25,7 +25,6 @@ import java.util.stream.LongStream;
 @Transactional
 class UserDaoRepositoryTests {
 
-    public static final int ITERATIONS = 100_000;
     private final DaoUserService userService;
 
     public UserDaoRepositoryTests(@Autowired DaoUserService userService) {
@@ -49,7 +48,7 @@ class UserDaoRepositoryTests {
     @Test
     @DirtiesContext
     void testDaoInserts() {
-        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
             user.setUsername("Username" + i);
@@ -61,12 +60,28 @@ class UserDaoRepositoryTests {
     @Test
     @DirtiesContext
     void testDaoUpdates() {
-        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
             user.setUsername("UpdatedUsername" + i);
             user.setPassword("UpdatedPassword" + i);
             userService.update(user);
+        });
+    }
+
+    @Test
+    @DirtiesContext
+    void testDaoFinds() {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(userService::findById);
+    }
+
+    @Test
+    @DirtiesContext
+    void testDaoDeletes() {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
+            User user = new User();
+            user.setId(i);
+            userService.delete(user);
         });
     }
 }

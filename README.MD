@@ -30,7 +30,10 @@ This project is a sample application demonstrating the usage of different types 
 
 This project uses Testcontainers for integration tests. Testcontainers allows us to run tests in a Docker containerized environment, providing a more realistic testing scenario.
 
+You can customize the number of iterations run on the `test` profile by changing the constant `ITERATIONS` on `src/test/java/com/example/repository_poc/Constants.java` setting the number of iterations you want to run. 
+
 To run all tests using Testcontainers, use the following command:
+
 ```bash
 mvn test -Dspring.profiles.active=test
 ```
@@ -92,8 +95,6 @@ You can generate the Allure report using the following command:
 ```bash
 mvn allure:serve
 ```
-
-
 
 ## Acknowledgments
 

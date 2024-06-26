@@ -24,7 +24,6 @@ import java.util.stream.LongStream;
 @Testcontainers
 class JdbcUserRepositoryTests {
 
-    public static final int ITERATIONS = 100_000;
     private final JdbcUserService userService;
 
     public JdbcUserRepositoryTests(@Autowired JdbcUserService userService) {
@@ -52,7 +51,7 @@ class JdbcUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJdbcInserts() {
-        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
             user.setUsername("Username" + i);
@@ -64,13 +63,28 @@ class JdbcUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJdbcUpdates() {
-        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
             user.setUsername("UpdatedUsername" + i);
             user.setPassword("UpdatedPassword" + i);
             userService.update(user);
         });
+    }
 
+    @Test
+    @DirtiesContext
+    void testJdbcSelects() {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(userService::findById);
+    }
+
+    @Test
+    @DirtiesContext
+    void testJdbcDeletes() {
+        LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
+            User user = new User();
+            user.setId(i);
+            userService.delete(user);
+        });
     }
 }
