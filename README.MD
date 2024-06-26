@@ -38,6 +38,16 @@ To run all tests using Testcontainers, use the following command:
 mvn test -Dspring.profiles.active=test
 ```
 
+### Allure reports
+
+After running the tests, you can generate an Allure report to view the test results. The Allure report provides detailed information about the test results and can be used to identify issues and bottlenecks in your application.
+
+You can generate the Allure report using the following command:
+
+```bash
+mvn allure:serve
+```
+
 ### Performance Tests
 
 To run performance tests for inserts, selects, updates and deletes across JDBC, JPA, and DAO implementations, use the following endpoint:
@@ -84,16 +94,6 @@ To run the Docker Compose setup, use the following command:
 
 ```bash
 docker compose up --build
-```
-
-### Allure reports
-
-After running the tests, you can generate an Allure report to view the test results. The Allure report provides detailed information about the test results and can be used to identify issues and bottlenecks in your application.
-
-You can generate the Allure report using the following command:
-
-```bash
-mvn allure:serve
 ```
 
 ## Acknowledgments
