@@ -14,8 +14,3 @@ public class JdbcUserController extends BaseUserController<JdbcUserService> {
         super(userService);
     }
 }
-
-
-
-
-

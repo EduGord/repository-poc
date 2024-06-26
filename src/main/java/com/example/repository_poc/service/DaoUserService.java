@@ -13,4 +13,3 @@ public class DaoUserService extends BaseUserService<DaoUserRepository> {
         super(userRepository, meterRegistry, "dao.insert.counter", "dao.update.counter", "dao.insert.timer", "dao.update.timer");
     }
 }
-
