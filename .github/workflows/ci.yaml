@@ -24,13 +24,13 @@ jobs:
           distribution: 'corretto'
           java-version: '21'
       - name: Build with Maven
-        run: mvn clean install
+        run: mvn clean install -Dmaven.test.skip=true
       - name: Run tests
-        run: mvn test
+        run: mvn test -Dspring.profiles.active=test
       - name: Generate Allure Report
         run: mvn allure:report
       - name: Upload Allure Results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: allure-results
           path: target/allure-results
