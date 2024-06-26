@@ -24,6 +24,7 @@ import java.util.stream.LongStream;
 @Testcontainers
 class JdbcUserRepositoryTests {
 
+    public static final int ITERATIONS = 100_000;
     private final JdbcUserService userService;
 
     public JdbcUserRepositoryTests(@Autowired JdbcUserService userService) {
@@ -34,7 +35,8 @@ class JdbcUserRepositoryTests {
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("testdb")
             .withUsername("testuser")
-            .withPassword("testpassword");
+            .withPassword("testpassword")
+            .withInitScript("schema.sql");
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
@@ -50,7 +52,7 @@ class JdbcUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJdbcInserts() {
-        LongStream.range(0, 100).parallel().forEach(i -> {
+        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
             user.setUsername("Username" + i);
@@ -62,12 +64,13 @@ class JdbcUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJdbcUpdates() {
-        LongStream.range(0, 100).parallel().forEach(i -> {
+        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
             user.setUsername("UpdatedUsername" + i);
             user.setPassword("UpdatedPassword" + i);
             userService.update(user);
         });
+
     }
 }

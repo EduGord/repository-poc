@@ -44,6 +44,13 @@
 			<artifactId>postgresql</artifactId>
 		</dependency>
 
+		<!-- H2 Database -->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 		<!-- Micrometer Prometheus registry -->
 		<dependency>
 			<groupId>io.micrometer</groupId>
@@ -56,6 +63,20 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-junit5</artifactId>
+			<version>2.27.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>io.qameta.allure</groupId>
+			<artifactId>allure-spring-boot</artifactId>
+			<version>2.9.0</version>
+		</dependency>
+
 
 		<!-- Testcontainers dependencies -->
 		<dependency>
@@ -84,6 +105,7 @@
 			<version>3.12.0</version>
 		</dependency>
 
+
 	</dependencies>
 
 	<build>
@@ -98,7 +120,6 @@
 					<target>${java.version}</target>
 				</configuration>
 			</plugin>
-
 			<!-- Spring Boot Maven Plugin -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -114,6 +135,15 @@
 						</goals>
 					</execution>
 				</executions>
+			</plugin>
+			<!-- Allure Maven Plugin -->
+			<plugin>
+				<groupId>io.qameta.allure</groupId>
+				<artifactId>allure-maven</artifactId>
+				<version>2.12.0</version>
+				<configuration>
+					<resultsDirectory>${project.build.directory}/allure-results</resultsDirectory>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>

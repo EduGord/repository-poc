@@ -23,6 +23,7 @@ import java.util.stream.LongStream;
 @Testcontainers
 class JpaUserRepositoryTests {
 
+    public static final int ITERATIONS = 100_000;
     private final JpaUserService userService;
 
     public JpaUserRepositoryTests(@Autowired JpaUserService userService) {
@@ -33,7 +34,8 @@ class JpaUserRepositoryTests {
     public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
             .withDatabaseName("testdb")
             .withUsername("testuser")
-            .withPassword("testpassword");
+            .withPassword("testpassword")
+            .withInitScript("schema.sql");
 
     @DynamicPropertySource
     static void configureProperties(DynamicPropertyRegistry registry) {
@@ -49,7 +51,7 @@ class JpaUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJpaInserts() {
-        LongStream.range(0, 100).parallel().forEach(i -> {
+        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
             user.setUsername("Username" + i);
@@ -61,7 +63,7 @@ class JpaUserRepositoryTests {
     @Test
     @DirtiesContext
     void testJpaUpdates() {
-        LongStream.range(0, 100).parallel().forEach(i -> {
+        LongStream.range(0, ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
             user.setUsername("UpdatedUsername" + i);

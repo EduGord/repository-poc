@@ -32,7 +32,7 @@ This project uses Testcontainers for integration tests. Testcontainers allows us
 
 To run all tests using Testcontainers, use the following command:
 ```bash
-mvn test
+mvn test -Dspring.profiles.active=test
 ```
 
 ### Performance Tests
@@ -67,7 +67,7 @@ To run performance tests for inserts, selects, updates and deletes across JDBC, 
 
 ### Database Configuration
 
-The application uses PostgreSQL as the database. You can configure the database settings in the `application-integration.yaml` file located in the `src/main/resources` directory.
+The application uses PostgreSQL as the database. You can configure the database settings in the `application-dev.yaml` file located in the `src/main/resources` directory.
 
 ### Testcontainers Configuration
 
@@ -75,7 +75,25 @@ The Testcontainers setup is configured in the test classes themselves. No additi
 
 ### Docker Compose Configuration for Integration Tests
 
-The Docker Compose setup is defined in the `docker-compose.yml` file in the root of the project. It includes services for PostgreSQL and Prometheus, as well as your Spring Boot application.
+The Docker Compose setup is defined in the `docker-compose.yml` file in the root of the project. It includes services for PostgreSQL and Prometheus, as well as your Spring Boot application. 
+
+To run the Docker Compose setup, use the following command:
+
+```bash
+docker compose up --build
+```
+
+### Allure reports
+
+After running the tests, you can generate an Allure report to view the test results. The Allure report provides detailed information about the test results and can be used to identify issues and bottlenecks in your application.
+
+You can generate the Allure report using the following command:
+
+```bash
+mvn allure:serve
+```
+
+
 
 ## Acknowledgments
 
@@ -84,3 +102,5 @@ The Docker Compose setup is defined in the `docker-compose.yml` file in the root
 - [Maven](https://maven.apache.org/)
 - [Docker](https://www.docker.com/)
 - [Prometheus](https://prometheus.io/)
+- [Allure](https://allurereport.org/docs/)
+
