@@ -40,13 +40,17 @@ mvn test -Dspring.profiles.active=test
 
 ### Allure reports
 
-After running the tests, you can generate an Allure report to view the test results. The Allure report provides detailed information about the test results and can be used to identify issues and bottlenecks in your application.
+You can find the Allure report for the latest commit on this repository on the following link: [latest repository-poc allure report](https://edugord.github.io/repository-poc/) since the allure report is generated on the `gh-pages` branch and github actions are enabled to generate the report on every push to the main branch.
+
+
+Locally, after running the tests, you can generate an Allure report to view the test results. The Allure report provides detailed information about the test results and can be used to identify issues and bottlenecks in your application.
 
 You can generate the Allure report using the following command:
 
 ```bash
 mvn allure:serve
 ```
+
 
 ### Performance Tests
 

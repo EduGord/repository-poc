@@ -1,55 +1,36 @@
-package com.example.repository_poc;
+package com.example.repository_poc.repository;
 
+import com.example.repository_poc.Constants;
 import com.example.repository_poc.model.entity.User;
-import com.example.repository_poc.service.JpaUserService;
-import org.junit.jupiter.api.BeforeEach;
+import com.example.repository_poc.service.DaoUserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.condition.EnabledIfSystemProperty;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
-import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
+import org.springframework.transaction.annotation.Transactional;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.stream.LongStream;
 
+
 @SpringBootTest
+@Testcontainers
 @ActiveProfiles("test")
 @EnabledIfSystemProperty(named = "spring.profiles.active", matches = "test")
-@Testcontainers
-class JpaUserRepositoryTests {
+@Transactional
+class UserDaoRepositoryTests extends BaseRepositoryTest {
 
-    private final JpaUserService userService;
+    private final DaoUserService userService;
 
-    public JpaUserRepositoryTests(@Autowired JpaUserService userService) {
+    public UserDaoRepositoryTests(@Autowired DaoUserService userService) {
         this.userService = userService;
-    }
-
-    @Container
-    public static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:latest")
-            .withDatabaseName("testdb")
-            .withUsername("testuser")
-            .withPassword("testpassword")
-            .withInitScript("schema.sql");
-
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
-
-    @BeforeEach
-    void setup() {
     }
 
     @Test
     @DirtiesContext
-    void testJpaInserts() {
+    void testDaoInserts() {
         LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("User" + i);
@@ -61,7 +42,7 @@ class JpaUserRepositoryTests {
 
     @Test
     @DirtiesContext
-    void testJpaUpdates() {
+    void testDaoUpdates() {
         LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setName("UpdatedUser" + i);
@@ -73,13 +54,13 @@ class JpaUserRepositoryTests {
 
     @Test
     @DirtiesContext
-    void testJpaSelects() {
+    void testDaoFinds() {
         LongStream.range(0, Constants.ITERATIONS).parallel().forEach(userService::findById);
     }
 
     @Test
     @DirtiesContext
-    void testJpaDeletes() {
+    void testDaoDeletes() {
         LongStream.range(0, Constants.ITERATIONS).parallel().forEach(i -> {
             User user = new User();
             user.setId(i);
